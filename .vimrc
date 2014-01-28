@@ -1,3 +1,18 @@
+""""""""""""""""""""""""""""""
+" => Manage plugins
+""""""""""""""""""""""""""""""
+" Pathogen
+execute pathogen#infect()
+
+" Vundle
+filetype off "filetype off required by vundle
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+
+" Vundles Bundles
+Bundle 'gmarik/vundle'
+Bundle 'christoomey/vim-tmux-navigator'
+
 let mapleader = ","
 let g:mpleader = ","
 
@@ -7,7 +22,6 @@ nmap <leader>w :w!<cr>
 set nobackup
 set nowb
 set noswapfile
-
 
 
 """"""""""""""""""""""""""""""
@@ -37,6 +51,8 @@ map <leader>l <C-W>l
 "map <C-H> <C-W>H
 "map <C-L> <C-W>L
 
+
+
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
@@ -50,7 +66,6 @@ set guifont=Monoaco:h14
 """"""""""""""""""""""""""""""
 " => For the NERD Commenter
 """"""""""""""""""""""""""""""
-
 filetype plugin on
 
 """"""""""""""""""""""""""""""
@@ -60,3 +75,13 @@ set winwidth=30
 set winminwidth=30
 set winwidth=9999
 
+
+""""""""""""""""""""""""""""""
+" => Theme that window
+""""""""""""""""""""""""""""""
+
+syntax on
+set t_Co=256
+let g:solarized_termcolors=256
+set background=light
+colorscheme solarized
