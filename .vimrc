@@ -1,11 +1,16 @@
 """"""""""""""""""""""""""""""
 " => Manage plugins
 """"""""""""""""""""""""""""""
+filetype off 
+set nocompatible
+syntax on
+filetype plugin indent on
+
 " Pathogen
+set rtp+=~/.vim/autorun
 execute pathogen#infect()
 
 " Vundle
-filetype off "filetype off required by vundle
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
@@ -22,7 +27,8 @@ nmap <leader>w :w!<cr>
 set nobackup
 set nowb
 set noswapfile
-
+set relativenumber
+set tabstop=2
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -52,6 +58,9 @@ map <leader>l <C-W>l
 "map <C-L> <C-W>L
 
 
+" switch between tabs
+nmap <leader>tl :tabn<cr>
+nmap <leader>th :tabp<cr>
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -80,8 +89,20 @@ set winwidth=9999
 " => Theme that window
 """"""""""""""""""""""""""""""
 
-syntax on
 set t_Co=256
 let g:solarized_termcolors=256
-set background=light
-colorscheme solarized
+
+
+
+""""""""""""""""""""""""""""""
+" => Number Toggle
+""""""""""""""""""""""""""""""
+function !NumberToggle()
+	if(&relativenumber == 1)
+		set number
+	else
+		set relativenumber
+	endif
+endfunc
+
+noremap <C-n> :call NumberToggle()<cr>
