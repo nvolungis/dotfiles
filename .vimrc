@@ -97,7 +97,7 @@ let g:solarized_termcolors=256
 """"""""""""""""""""""""""""""
 " => Number Toggle
 """"""""""""""""""""""""""""""
-function !NumberToggle()
+function! NumberToggle()
 	if(&relativenumber == 1)
 		set number
 	else
