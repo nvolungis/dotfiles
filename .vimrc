@@ -1,48 +1,37 @@
-""""""""""""""""""""""""""""""
-" => Manage plugins
-""""""""""""""""""""""""""""""
-filetype off 
-set nocompatible
-syntax on
-filetype plugin indent on
-
-" Pathogen
-set rtp+=~/.vim/autorun
-execute pathogen#infect()
-
-" Vundle
+" vundle
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
-" Vundles Bundles
+" required vundle bundle
 Bundle 'gmarik/vundle'
+
+" bundles
 Bundle 'christoomey/vim-tmux-navigator'
 
-let mapleader = ","
-let g:mpleader = ","
+" nelstrom's plugin depends on kana's
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'tomtom/tcomment_vim' 
+Bundle 'tpope/vim-rails'
+Bundle 'wincent/Command-T'
 
-nmap <leader>w :w!<cr>
+syntax on
+filetype plugin indent on
 
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
+set nocompatible
 set nowb
 set noswapfile
 set relativenumber
 set tabstop=2
+set laststatus=2
+set guifont=Monoaco:h14
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
+let mapleader = ","
+let g:mpleader = ","
 
-
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
-
-" Smart way to move between windows
+" smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -52,46 +41,25 @@ map <leader>j <C-W>j
 map <leader>k <C-W>k
 map <leader>h <C-W>h
 map <leader>l <C-W>l
-"map <C-J> <C-W>J
-"map <C-K> <C-W>K
-"map <C-H> <C-W>H
-"map <C-L> <C-W>L
+
+map <C-J> <C-W>J
+map <C-K> <C-W>K
+map <C-H> <C-W>H
+map <C-L> <C-W>L
+map <silent> <leader><cr> :noh<cr>
 
 
 " switch between tabs
 nmap <leader>tl :tabn<cr>
 nmap <leader>th :tabp<cr>
 
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
-
-" Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-set guifont=Monoaco:h14
-
-""""""""""""""""""""""""""""""
-" => For the NERD Commenter
-""""""""""""""""""""""""""""""
-filetype plugin on
-
-""""""""""""""""""""""""""""""
-" => Fancy window splitting
-""""""""""""""""""""""""""""""
-set winwidth=30
-set winminwidth=30
-set winwidth=9999
+" easy saves
+nmap <leader>w :w!<cr>
 
 
-""""""""""""""""""""""""""""""
 " => Theme that window
-""""""""""""""""""""""""""""""
-
 set t_Co=256
 let g:solarized_termcolors=256
-
 
 
 """"""""""""""""""""""""""""""
