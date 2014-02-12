@@ -25,8 +25,13 @@ set nowb
 set noswapfile
 set relativenumber
 set tabstop=2
+set shiftwidth=2
+set expandtab
+set autoindent
+set smartindent
 set laststatus=2
 set guifont=Monoaco:h14
+set hlsearch
 
 let mapleader = ","
 let g:mpleader = ","
