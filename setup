@@ -1,0 +1,69 @@
+ #!/bin/bash
+link_dotfiles() {
+    VIMRC_TARGET=~/.vimrc
+    VIMRC_SOURCE="$(pwd)/.vimrc"
+
+    if [ -a $VIMRC_TARGET ]; then
+        if [ -L $VIMRC_TARGET ]; then
+            VIMRC_LINKED_TARGET=$(readlink $VIMRC_TARGET)
+
+            if [ $VIMRC_LINKED_TARGET -ef $VIMRC_SOURCE ]; then
+                echo "vimrc already linked to dotfiles, skipping..."
+            else
+                while true; do
+                    read -p "vimrc is linked to: $VIMRC_LINKED_TARGET. would you like override? " yn
+                    case $yn in
+                        [Yy]* )
+                            echo "unlinking $VIMRC_LINKED_TARGET..."
+                            unlink $VIMRC_TARGET
+                            echo "linking .vimrc to dotfiles..."
+                            ln -s $VIMRC_SOURCE $VIMRC_TARGET;
+                            break;;
+                        [Nn]* )
+                            exit;;
+                        * )
+                            echo "please enter y/n"
+                    esac
+                done
+            fi
+        else
+            while true; do
+                read -p "vimrc already present, overwrite w/ dotfile version? " yn
+                case $yn in
+                    [Yy]* )
+                        echo "removing $VIMRC_SOURCE..."
+                        rm $VIMRC_TARGET
+                        echo "linking .vimrc to dotfiles..."
+                        ln -s $VIMRC_SOURCE $VIMRC_TARGET;
+                        break;;
+                    [Nn]* )
+                        exit;;
+                    * )
+                        echo "please enter y/n";;
+                esac
+            done
+        fi
+    else
+        echo "linking .vimrc to dotfiles..."
+        ln -s $VIMRC_SOURCE $VIMRC_TARGET 
+    fi
+}
+
+install_vim_plugins() {
+    VUNDLE_PATH="~/.vim/bundle/Vundle.vim"
+    echo $VUNDLE_PATH
+
+    if [ ! -d "$VUNDLE_PATH" ]; then
+        echo "installing vundle..."
+        git clone https://github.com/VundleVim/Vundle.vim.git $VUNDLE_PATH
+    else
+        echo "vundle installed, skipping..."
+    fi
+
+    echo "installing vim plugins..."
+
+    vim +PluginInstall +qall
+}
+
+link_dotfiles
+install_vim_plugins

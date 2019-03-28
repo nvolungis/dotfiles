@@ -57,7 +57,6 @@ Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
 
-
 " set colorscheme / variation
 set background=dark
 colorscheme solarized
