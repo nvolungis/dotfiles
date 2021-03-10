@@ -33,21 +33,29 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/promptline.vim'
 Plugin 'moll/vim-node'
 Plugin 'matze/vim-move'
-
+Plugin 'k0kubun/vim-open-github'
+Plugin 'thoughtbot/vim-rspec'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'slashmili/alchemist.vim'
+Plugin 'yegappan/greplace'
+Plugin 'brooth/far.vim'
 
 " lang syntax
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'guns/vim-clojure-static'
 Plugin 'mxw/vim-jsx'
+Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'neovimhaskell/haskell-vim'
 Plugin 'lambdatoast/elm.vim'
 Plugin 'ElmCast/elm-vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'elixir-lang/vim-elixir'
+Plugin 'chrisbra/csv.vim'
+Plugin 'elixir-editors/vim-elixir'
 
 
-" linting
-Plugin 'vim-syntastic/syntastic'
+" formatting
+Plugin 'sbdchd/neoformat'
+Plugin 'w0rp/ale'
 
 
 " colorschemes
@@ -57,13 +65,15 @@ Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
 
+
 " set colorscheme / variation
-set background=dark
+set background=light
 colorscheme solarized
 
 " set macligatures
-" set guifont=Fira\ Code:h12
+set guifont=Fira\ Code:h12
 
+set grepprg=ack
 
 set modeline
 set nobackup
@@ -149,34 +159,27 @@ map <leader>q :qa<cr>
 " don't open vimdiff in readonly mode
 set noro
 
-
 " nerdtree window width
 let g:NERDTreeWinSize = 60
+let g:ctrlp_dont_split = 'nerdtree'
 
 " set column w/ to 80 chars
-set colorcolumn=80
+set colorcolumn=100
 
+" prettier on save
+autocmd BufWritePre *.js Neoformat
+autocmd BufWritePre *.jsx Neoformat
 
-" syntactic linting config
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" ale icon backgrounds
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
 
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
+" clear signcolumn background
+highlight clear SignColumn
 
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
-
+" set ale signs
+let g:ale_sign_error = '💩'
+let g:ale_sign_warning = '⚠️'
 
 " setup ctrlP
 let g:ctrlp_map = '<Leader>s'
@@ -186,20 +189,9 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  'node_modules',
   \ }
 
-
-" use prettier for the format command gq
-" autocmd FileType javascript set formatprg=prettier\ --stdin\ --single-quote\ --trailing-comma\ es5
-
-" run prettier on save
-" autocmd BufWritePre *.js :normal gggqG
-" autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
-
-
-" for vim-move
-"
-"
-
-" let g:move_key_modifier = 'C-c'
+" setup Ctrl-Shift-F
+nmap <Leader>f <Plug>CtrlSFPrompt
+let g:ctrlsf_ignore_dir = ['dist_es3', 'node_modules']
 
 " fix some typos
 map :W :w
@@ -241,3 +233,5 @@ filetype off
 filetype on
 filetype plugin on
 " filetype indent on
+
+let g:rspec_command = "bin/rspec {spec}"

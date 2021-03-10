@@ -1,23 +1,26 @@
  #!/bin/bash
 link_dotfiles() {
-    VIMRC_TARGET=~/.vimrc
-    VIMRC_SOURCE="$(pwd)/.vimrc"
+    TARGET="~/"$1
+    SOURCE="$(pwd)/"$1
 
-    if [ -a $VIMRC_TARGET ]; then
-        if [ -L $VIMRC_TARGET ]; then
-            VIMRC_LINKED_TARGET=$(readlink $VIMRC_TARGET)
+    echo $TARGET
+    echo $SOURCE
 
-            if [ $VIMRC_LINKED_TARGET -ef $VIMRC_SOURCE ]; then
-                echo "vimrc already linked to dotfiles, skipping..."
+    if [ -a $TARGET ]; then
+        if [ -L $TARGET ]; then
+            LINKED_TARGET=$(readlink $TARGET)
+
+            if [ $LINKED_TARGET -ef $SOURCE ]; then
+                echo "$1 already linked to dotfiles, skipping..."
             else
                 while true; do
-                    read -p "vimrc is linked to: $VIMRC_LINKED_TARGET. would you like override? " yn
+                    read -p "$1 is linked to: $LINKED_TARGET. would you like override? " yn
                     case $yn in
                         [Yy]* )
-                            echo "unlinking $VIMRC_LINKED_TARGET..."
-                            unlink $VIMRC_TARGET
-                            echo "linking .vimrc to dotfiles..."
-                            ln -s $VIMRC_SOURCE $VIMRC_TARGET;
+                            echo "unlinking $LINKED_TARGET..."
+                            unlink $TARGET
+                            echo "linking $1 to dotfiles..."
+                            ln -s $SOURCE $TARGET;
                             break;;
                         [Nn]* )
                             exit;;
@@ -28,13 +31,13 @@ link_dotfiles() {
             fi
         else
             while true; do
-                read -p "vimrc already present, overwrite w/ dotfile version? " yn
+                read -p "$1 already present, overwrite w/ dotfile version? " yn
                 case $yn in
                     [Yy]* )
-                        echo "removing $VIMRC_SOURCE..."
-                        rm $VIMRC_TARGET
-                        echo "linking .vimrc to dotfiles..."
-                        ln -s $VIMRC_SOURCE $VIMRC_TARGET;
+                        echo "removing $SOURCE..."
+                        rm $TARGET
+                        echo "linking $1 to dotfiles..."
+                        ln -s $SOURCE $TARGET;
                         break;;
                     [Nn]* )
                         exit;;
@@ -44,8 +47,8 @@ link_dotfiles() {
             done
         fi
     else
-        echo "linking .vimrc to dotfiles..."
-        ln -s $VIMRC_SOURCE $VIMRC_TARGET 
+        echo "linking $1 to dotfiles..."
+        ln -s $SOURCE $TARGET 
     fi
 }
 
@@ -65,5 +68,6 @@ install_vim_plugins() {
     vim +PluginInstall +qall
 }
 
-link_dotfiles
-install_vim_plugins
+link_dotfiles .vimrc
+link_dotfiles .ackrc
+# install_vim_plugins
